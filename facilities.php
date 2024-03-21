@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facilities</title>
+  </head>
+  <body align="center">
+    <h1>Facilities</h1>
+    <tr>
+      <th>FID</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Province</th>
+      <th>Postal Code</th>
+      <th>Phone Number</th>
+      <th>Web Address</th>
+      <th>Facility Type</th>
+      <th>Manager SIN</th>
+      <th>Capacity</th>
+    </tr>
+    <?php
+    $connection = mysqli_connect("zkc353.encs.concordia.ca", "zkc353_4", "353boyzz", "Assignment 1 353");
+    if($connection->connect_error){ 
+      die('Connection Failed ' . $connection->connect_error); 
+    } 
+    $sql = "SELECT fid, name, address, city, province, postal_code, phone_number, web_address, facility_type, manager_sin, capacity FROM Facilities";
+    $result = $connection -> query($sql);
+
+    if ($result -> num_rows > 0){
+      while ($row = $result -> fetch_assoc()){
+        echo "<tr><td>" . $row["fid"] . "</td><td>" . $row["name"] . "</td><td>" . $row["address"] . "</td><td>" . $row["city"] . "</td><td>" . $row["province"] . "</td><td>" 
+        . $row["postal_code"] . "</td><td>" . $row["phone_number"] . "</td><td>" . $row["web_adress"] . "</td><td>" . $row["facility_type"] . "</td><td>" 
+        . $row["manager_sin"] . "</td><td>" . $row["capacity"] . "</td></tr>";
+      }
+      echo "</table>";
+    }
+    else{
+      echo "0 result";
+    }
+    $connection -> close();
+    ?>
+    <style>
+      h1 {
+        background-color: antiquewhite;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        border: 2px solid black;
+      }
+      body {
+        font-family: sans-serif;
+      }
+    </style>
+  </body>
+</html>
