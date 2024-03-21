@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facilities</title>
+  </head>
+  <body align="center">
+    <h1>Facilities</h1>
+    <table>
+      <tr>
+        <th>FID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Province</th>
+        <th>Postal Code</th>
+        <th>Phone Number</th>
+        <th>Web Address</th>
+        <th>Facility Type</th>
+        <th>Manager SIN</th>
+        <th>Capacity</th>
+      </tr>
+      <?php
+      $connection = mysqli_connect("zkc353.encs.concordia.ca", "zkc353_4", "353boyzz", "Assignment 1 353");
+      if($connection->connect_error){ die('Connection Failed ' .
+      $connection->connect_error); } ?>
+    </table>
+    <style>
+      h1 {
+        background-color: antiquewhite;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        border: 2px solid black;
+      }
+      body {
+        font-family: sans-serif;
+      }
+    </style>
+  </body>
+</html>
