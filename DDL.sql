@@ -18,6 +18,9 @@ DROP TABLE IF EXISTS WorksAt;
 DROP TABLE IF EXISTS Vaccinated;
 DROP TABLE IF EXISTS Infected;
 DROP TABLE IF EXISTS Schedule;
+DROP TABLE IF EXISTS Shift;
+DROP TABLE IF EXISTS Secondary;
+
 
 CREATE TABLE Person (
     SIN VARCHAR(20) NOT NULL UNIQUE, -- added NOT NULL UNIQUE
@@ -108,31 +111,44 @@ CREATE TABLE LivesWith (
     FOREIGN KEY (person_sin) REFERENCES Person(SIN)
 );
 
+
 CREATE TABLE WorksAt (
-  employee_sin VARCHAR(20),
-  fid INT,
+  sid INT NOT NULL,
+  employee_sin VARCHAR(20) NOT NULL,
+  fid INT NOT NULL,
   start_date DATE,
   end_date DATE,
-  PRIMARY KEY (employee_sin, fid, start_date),
+  PRIMARY KEY (sid),
   FOREIGN KEY (employee_sin) REFERENCES Employee(employee_sin),
-  FOREIGN KEY (fid) REFERENCES Facility(fid)
+  FOREIGN KEY (fid) REFERENCES Facility(fid),
+  FOREIGN KEY (sid) REFERENCES Schedule(sid)
 );
 
 DELIMITER //
-CREATE TRIGGER CheckOnlyOneFacilityAtATime
+
+CREATE TRIGGER check_overlap_time
 BEFORE INSERT ON WorksAt
 FOR EACH ROW
 BEGIN
-    DECLARE count INT;
-    SELECT COUNT(*) INTO count
+    DECLARE active_assignments INT;
+    
+    -- Count active assignments for the employee to be inserted
+    SELECT COUNT(*) INTO  active_assignments
+	FROM (
+    SELECT employee_sin, fid
     FROM WorksAt
-    WHERE employee_sin = NEW.employee_sin AND end_date IS NULL;
-    IF count > 0 THEN
+    WHERE end_date is NULL
+    GROUP BY employee_sin, fid
+    HAVING COUNT(*) > 1
+    
+) AS duplicates;
+
+    -- If the number of active assignments is greater than 1, disallow the insertion
+    IF active_assignments > 0 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Employee already works somewhere, change end date before adding';
+        SET MESSAGE_TEXT = 'Employee already has overlapping assignments';
     END IF;
-END //
-DELIMITER ;
+END//
 
 
 CREATE TABLE Vaccinated (
@@ -156,33 +172,39 @@ CREATE TABLE Infected (
   FOREIGN KEY (variantType) REFERENCES Variant(variantType)
 );
 
+CREATE TABLE Secondary (
+	rid INT NOT NULL,
+    sin VARCHAR(20) NOT NULL,
+    PRIMARY KEY (sin, rid),
+    FOREIGN KEY (sin) REFERENCES Person(SIN),
+	FOREIGN KEY (rid) REFERENCES Residence(rid)
+);
+
 CREATE TABLE Schedule (
-  sid INT,
-  fid INT,
-  employee_sin VARCHAR(20),
-  Date DATE,
-  StartTime TIME,
-  EndTime TIME,
-  PRIMARY KEY(sid),
-  FOREIGN KEY(fid) REFERENCES Facility(fid),
-  FOREIGN KEY(employee_sin) REFERENCES Employee(employee_sin),
-  CONSTRAINT startLessThanEnd CHECK (StartTime < EndTime)
+	sid INT NOT NULL,
+	PRIMARY KEY(sid)
+);
+
+CREATE TABLE Shift (
+	start DATETIME NOT NULL,
+    end DATETIME NOT NULL,
+    sid INT NOT NULL,
+    shift_id INT NOT NULL,
+    PRIMARY KEY(shift_id, sid),
+    FOREIGN KEY (sid) REFERENCES Schedule(sid)
+    ON DELETE CASCADE
 );
 
 DELIMITER $$
-CREATE TRIGGER Before_Insert_Schedule
-BEFORE INSERT ON Schedule
+CREATE TRIGGER Before_Insert_Shift
+BEFORE INSERT ON Shift
 FOR EACH ROW
 BEGIN
   DECLARE conflict_count INT;
   SELECT COUNT(*) INTO conflict_count
-  FROM Schedule
-  WHERE NEW.employee_sin = employee_sin
-    AND NEW.Date = Date
-    AND (
-      (NEW.StartTime < EndTime AND NEW.EndTime > StartTime)  -- Overlaps existing
-      OR (NEW.StartTime = StartTime AND NEW.EndTime = EndTime) -- Exact match
-    );
+  FROM Shift
+  WHERE (Shift.sid = New.sid) AND (NEW.start < Shift.end AND NEW.end > Shift.start) OR (NEW.start = Shift.end AND NEW.end = Shift.start);
+  
   IF conflict_count > 0 THEN
     SIGNAL SQLSTATE '45000' 
     SET MESSAGE_TEXT = 'Schedule conflict detected.';
