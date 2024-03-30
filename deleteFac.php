@@ -43,9 +43,13 @@
     $connection -> close();
     ?>
     <br><br><br>
-    <div><a href="insertFac.php">Create New Facility</a></div>
-    <div><a href="editFac.php">Edit Facility</a></div>
-    <div><a href="deleteFac.php">Delete Facility</a></div>
+    <form action="delete_entry.php" method="post">
+        <input type="hidden" name="table_name" value="Facility">
+        <input type="hidden" name="key_name" value="FID">
+        Enter FID of the entry to delete: <input type="text" name="entry_id"><br>
+        <br>
+        <input type="submit" value="Delete Entry">
+    </form>
     <style>
       h1 {
         background-color: antiquewhite;
@@ -71,13 +75,10 @@
       a, form{
         background-color: #d66459;
       }
-      a:hover, form:hover {
-        background-color: maroon;
-      }
       a,
       a:hover, form, form:hover {
         display:inline-block;
-        width: 10%;
+        width: 30%;
         padding-top: 15px;
         padding-bottom: 15px;
         border-radius: 25px;

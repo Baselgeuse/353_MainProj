@@ -43,9 +43,20 @@
     $connection -> close();
     ?>
     <br><br><br>
-    <div><a href="insertFac.php">Create New Facility</a></div>
-    <div><a href="editFac.php">Edit Facility</a></div>
-    <div><a href="deleteFac.php">Delete Facility</a></div>
+    <form action="insertFacEntry.php" method="post">
+        FID: <input type="text" name="FID"><br>
+        Name: <input type="text" name="name"><br>
+        Address: <input type="text" name="address"><br>
+        City: <input type="text" name="city"><br>
+        Province: <input type="text" name="province"><br>
+        Postal Code: <input type="text" name="postal_code"><br>
+        Phone Number: <input type="text" name="phone_number"><br>
+        Web Address: <input type="text" name="web_address"><br>
+        Facility Type: <input type="text" name="facility_type"><br>
+        Manager SIN: <input type="text" name="manager_sin"><br>
+        Capacity: <input type="text" name="capacity"><br>
+        <input type="submit" value="Submit">
+    </form>
     <style>
       h1 {
         background-color: antiquewhite;
@@ -71,13 +82,10 @@
       a, form{
         background-color: #d66459;
       }
-      a:hover, form:hover {
-        background-color: maroon;
-      }
       a,
       a:hover, form, form:hover {
         display:inline-block;
-        width: 10%;
+        width: 30%;
         padding-top: 15px;
         padding-bottom: 15px;
         border-radius: 25px;
