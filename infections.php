@@ -3,37 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Facilities</title>
+    <title>Infections</title>
   </head>
   <body align="center">
-    <h1>Facilities</h1>
+    <h1>Infections</h1>
     <table>
     <tr>
-      <th>FID</th>
-      <th>Name</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>Province</th>
-      <th>Postal Code</th>
-      <th>Phone Number</th>
-      <th>Web Address</th>
-      <th>Facility Type</th>
-      <th>Manager SIN</th>
-      <th>Capacity</th>
+      <th>Person SIN</th>
+      <th>Variant Type</th>
+      <th>Date</th>
     </tr>
     <?php
     $connection = mysqli_connect("zkc353.encs.concordia.ca", "zkc353_4", "353boyzz", "zkc353_4");
     if($connection->connect_error){ 
       die('Connection Failed ' . $connection->connect_error); 
     } 
-    $sql = "SELECT fid, name, address, city, province, postal_code, phone_number, web_address, facility_type, manager_sin, capacity FROM Facility";
+    $sql = "SELECT person_sin, variantType, date FROM Infected";
     $result = $connection -> query($sql);
 
     if ($result -> num_rows > 0){
       while ($row = $result -> fetch_assoc()){
-        echo "<tr><td>" . $row["fid"] . "</td><td>" . $row["name"] . "</td><td>" . $row["address"] . "</td><td>" . $row["city"] . "</td><td>" . $row["province"] . "</td><td>" 
-        . $row["postal_code"] . "</td><td>" . $row["phone_number"] . "</td><td>" . $row["web_address"] . "</td><td>" . $row["facility_type"] . "</td><td>" 
-        . $row["manager_sin"] . "</td><td>" . $row["capacity"] . "</td></tr>";
+        echo "<tr><td>" . $row["person_sin"] . "</td><td>" . $row["variantType"] . "</td><td>" . $row["date"] . "</td></tr>";
       }
       echo "</table>";
     }
@@ -52,7 +42,6 @@
       body {
         font-family: sans-serif;
       }
-
       table {
         border-collapse: collapse;
         width: 100%;

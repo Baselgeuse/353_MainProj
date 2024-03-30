@@ -3,37 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Facilities</title>
+    <title>Vaccinations</title>
   </head>
   <body align="center">
-    <h1>Facilities</h1>
+    <h1>Vaccinations</h1>
     <table>
     <tr>
+      <th>Person SIN</th>
+      <th>Dose Number</th>
+      <th>Vaccine Type</th>
+      <th>Date</th>
       <th>FID</th>
-      <th>Name</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>Province</th>
-      <th>Postal Code</th>
-      <th>Phone Number</th>
-      <th>Web Address</th>
-      <th>Facility Type</th>
-      <th>Manager SIN</th>
-      <th>Capacity</th>
     </tr>
     <?php
     $connection = mysqli_connect("zkc353.encs.concordia.ca", "zkc353_4", "353boyzz", "zkc353_4");
     if($connection->connect_error){ 
       die('Connection Failed ' . $connection->connect_error); 
     } 
-    $sql = "SELECT fid, name, address, city, province, postal_code, phone_number, web_address, facility_type, manager_sin, capacity FROM Facility";
+    $sql = "SELECT person_sin, dose_number, vaccine_type, date, fid FROM Vaccinated";
     $result = $connection -> query($sql);
 
     if ($result -> num_rows > 0){
       while ($row = $result -> fetch_assoc()){
-        echo "<tr><td>" . $row["fid"] . "</td><td>" . $row["name"] . "</td><td>" . $row["address"] . "</td><td>" . $row["city"] . "</td><td>" . $row["province"] . "</td><td>" 
-        . $row["postal_code"] . "</td><td>" . $row["phone_number"] . "</td><td>" . $row["web_address"] . "</td><td>" . $row["facility_type"] . "</td><td>" 
-        . $row["manager_sin"] . "</td><td>" . $row["capacity"] . "</td></tr>";
+        echo "<tr><td>" . $row["person_sin"] . "</td><td>" . $row["dose_number"] . "</td><td>" . $row["vaccine_type"] . "</td><td>" . $row["date"] . "</td><td>" 
+        . $row["fid"] . "</td></tr>";
       }
       echo "</table>";
     }
@@ -52,7 +45,6 @@
       body {
         font-family: sans-serif;
       }
-
       table {
         border-collapse: collapse;
         width: 100%;
