@@ -3,35 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>People</title>
+    <title>Facilities</title>
   </head>
   <body align="center">
-    <h1>People</h1>
+  <h1>Residences</h1>
     <table>
     <tr>
-      <th>SIN</th>
-      <th>MID</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Date of Birth</th>
-      <th>Phone Number</th>
-      <th>Citizenship</th>
       <th>RID</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Province</th>
+      <th>Postal Code</th>
+      <th>Phone Number</th>
+      <th>Room Count</th>
+      <th>Residence Type</th>
     </tr>
     <?php
     $connection = mysqli_connect("zkc353.encs.concordia.ca", "zkc353_4", "353boyzz", "zkc353_4");
     if($connection->connect_error){ 
       die('Connection Failed ' . $connection->connect_error); 
     } 
-    $sql = "SELECT SIN, MID, fname, lname, email, DOB, phone_number, citizenship, rid FROM Person";
+    $sql = "SELECT rid, address, city, province, postal_code, phone_number, room_count, residence_type FROM Residence";
     $result = $connection -> query($sql);
 
     if ($result -> num_rows > 0){
       while ($row = $result -> fetch_assoc()){
-        echo "<tr><td>" . $row["SIN"] . "</td><td>" . $row["MID"] . "</td><td>" . $row["fname"] . "</td><td>" . $row["lname"] . "</td><td>" 
-        . $row["email"] . "</td><td>" . $row["DOB"] . "</td><td>" . $row["phone_number"] . "</td><td>" . $row["citizenship"] . "</td><td>" 
-        . $row["rid"] . "</td></tr>";
+        echo "<tr><td>" . $row["rid"] . "</td><td>" . $row["address"] . "</td><td>" . $row["city"] . "</td><td>" . $row["province"] . "</td><td>" 
+        . $row["postal_code"] . "</td><td>" . $row["phone_number"] . "</td><td>" . $row["room_count"] . "</td><td>" . $row["residence_type"] . "</td></tr>";
       }
       echo "</table>";
     }
@@ -41,9 +39,14 @@
     $connection -> close();
     ?>
     <br><br><br>
-    <div><a href="insertPer.php">Create New Person</a></div>
-    <div><a href="editPer.php">Edit Person</a></div>
-    <div><a href="deletePer.php">Delete Person</a></div>
+    <form action="edit_entry.php" method="post">
+        <input type="hidden" name="table_name" value="Residence">
+        <input type="hidden" name="key_name" value="RID">
+        Enter RID of the entry to edit: <input type="text" name="entry_id"><br>
+        Enter the attribute you would like to edit: <input type="text" name="column_name"><br>
+        New value: <input type="text" name="new_value"><br>
+        <input type="submit" value="Edit Entry">
+    </form>
     <style>
       h1 {
         background-color: antiquewhite;
@@ -69,13 +72,10 @@
       a, form{
         background-color: #d66459;
       }
-      a:hover, form:hover {
-        background-color: maroon;
-      }
       a,
       a:hover, form, form:hover {
         display:inline-block;
-        width: 10%;
+        width: 30%;
         padding-top: 15px;
         padding-bottom: 15px;
         border-radius: 25px;

@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>People</title>
+    <title>Facilities</title>
   </head>
   <body align="center">
-    <h1>People</h1>
+  <h1>People</h1>
     <table>
     <tr>
       <th>SIN</th>
@@ -41,9 +41,18 @@
     $connection -> close();
     ?>
     <br><br><br>
-    <div><a href="insertPer.php">Create New Person</a></div>
-    <div><a href="editPer.php">Edit Person</a></div>
-    <div><a href="deletePer.php">Delete Person</a></div>
+    <form action="insertPerEntry.php" method="post">
+        SIN: <input type="text" name="SIN"><br>
+        MID: <input type="text" name="MID"><br>
+        First Name: <input type="text" name="fname"><br>
+        Last Name: <input type="text" name="lname"><br>
+        Email: <input type="text" name="email"><br>
+        Date of Birth: <input type="text" name="DOB"><br>
+        Phone Number: <input type="text" name="phone_number"><br>
+        Citizenship: <input type="text" name="citizenship"><br>
+        RID: <input type="text" name="RID"><br>
+        <input type="submit" value="Submit">
+    </form>
     <style>
       h1 {
         background-color: antiquewhite;
@@ -69,13 +78,10 @@
       a, form{
         background-color: #d66459;
       }
-      a:hover, form:hover {
-        background-color: maroon;
-      }
       a,
       a:hover, form, form:hover {
         display:inline-block;
-        width: 10%;
+        width: 30%;
         padding-top: 15px;
         padding-bottom: 15px;
         border-radius: 25px;

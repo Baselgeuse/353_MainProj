@@ -35,6 +35,10 @@
     }
     $connection -> close();
     ?>
+    <br><br><br>
+    <div><a href="insertVac.php">Create New Vaccination Record</a></div>
+    <div><a href="editVac.php">Edit Vaccination Record</a></div>
+    <div><a href="deleteVac.php">Delete Vaccination Record</a></div>
     <style>
       h1 {
         background-color: antiquewhite;
@@ -56,6 +60,25 @@
       th{
         background-color: #d96459;
         color: white;
+      }
+      a, form{
+        background-color: #d66459;
+      }
+      a:hover, form:hover {
+        background-color: maroon;
+      }
+      a,
+      a:hover, form, form:hover {
+        display:inline-block;
+        width: 20%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-radius: 25px;
+        border: 2px solid black;
+        font-size:large;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        text-decoration: none;
       }
     </style>
   </body>

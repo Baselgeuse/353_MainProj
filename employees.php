@@ -30,6 +30,10 @@
     }
     $connection -> close();
     ?>
+    <br><br><br>
+    <div><a href="insertEmp.php">Create New Employee</a></div>
+    <div><a href="editEmp.php">Edit Employee</a></div>
+    <div><a href="deleteEmp.php">Delete Employee</a></div>
     <style>
       h1 {
         background-color: antiquewhite;
@@ -51,6 +55,25 @@
       th{
         background-color: #d96459;
         color: white;
+      }
+      a, form{
+        background-color: #d66459;
+      }
+      a:hover, form:hover {
+        background-color: maroon;
+      }
+      a,
+      a:hover, form, form:hover {
+        display:inline-block;
+        width: 10%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-radius: 25px;
+        border: 2px solid black;
+        font-size:large;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        text-decoration: none;
       }
     </style>
   </body>

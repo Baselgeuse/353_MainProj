@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>People</title>
+    <title>Facilities</title>
   </head>
   <body align="center">
-    <h1>People</h1>
+  <h1>People</h1>
     <table>
     <tr>
       <th>SIN</th>
@@ -41,9 +41,14 @@
     $connection -> close();
     ?>
     <br><br><br>
-    <div><a href="insertPer.php">Create New Person</a></div>
-    <div><a href="editPer.php">Edit Person</a></div>
-    <div><a href="deletePer.php">Delete Person</a></div>
+    <form action="edit_entry.php" method="post">
+        <input type="hidden" name="table_name" value="Person">
+        <input type="hidden" name="key_name" value="SIN">
+        Enter SIN of the entry to edit: <input type="text" name="entry_id"><br>
+        Enter the attribute you would like to edit: <input type="text" name="column_name"><br>
+        New value: <input type="text" name="new_value"><br>
+        <input type="submit" value="Edit Entry">
+    </form>
     <style>
       h1 {
         background-color: antiquewhite;
@@ -69,13 +74,10 @@
       a, form{
         background-color: #d66459;
       }
-      a:hover, form:hover {
-        background-color: maroon;
-      }
       a,
       a:hover, form, form:hover {
         display:inline-block;
-        width: 10%;
+        width: 30%;
         padding-top: 15px;
         padding-bottom: 15px;
         border-radius: 25px;

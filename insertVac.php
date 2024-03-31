@@ -3,35 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>People</title>
+    <title>Facilities</title>
   </head>
   <body align="center">
-    <h1>People</h1>
+  <h1>Vaccinations</h1>
     <table>
     <tr>
-      <th>SIN</th>
-      <th>MID</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Date of Birth</th>
-      <th>Phone Number</th>
-      <th>Citizenship</th>
-      <th>RID</th>
+      <th>Person SIN</th>
+      <th>Dose Number</th>
+      <th>Vaccine Type</th>
+      <th>Date</th>
+      <th>FID</th>
     </tr>
     <?php
     $connection = mysqli_connect("zkc353.encs.concordia.ca", "zkc353_4", "353boyzz", "zkc353_4");
     if($connection->connect_error){ 
       die('Connection Failed ' . $connection->connect_error); 
     } 
-    $sql = "SELECT SIN, MID, fname, lname, email, DOB, phone_number, citizenship, rid FROM Person";
+    $sql = "SELECT person_sin, dose_number, vaccine_type, date, fid FROM Vaccinated";
     $result = $connection -> query($sql);
 
     if ($result -> num_rows > 0){
       while ($row = $result -> fetch_assoc()){
-        echo "<tr><td>" . $row["SIN"] . "</td><td>" . $row["MID"] . "</td><td>" . $row["fname"] . "</td><td>" . $row["lname"] . "</td><td>" 
-        . $row["email"] . "</td><td>" . $row["DOB"] . "</td><td>" . $row["phone_number"] . "</td><td>" . $row["citizenship"] . "</td><td>" 
-        . $row["rid"] . "</td></tr>";
+        echo "<tr><td>" . $row["person_sin"] . "</td><td>" . $row["dose_number"] . "</td><td>" . $row["vaccine_type"] . "</td><td>" . $row["date"] . "</td><td>" 
+        . $row["fid"] . "</td></tr>";
       }
       echo "</table>";
     }
@@ -41,9 +36,14 @@
     $connection -> close();
     ?>
     <br><br><br>
-    <div><a href="insertPer.php">Create New Person</a></div>
-    <div><a href="editPer.php">Edit Person</a></div>
-    <div><a href="deletePer.php">Delete Person</a></div>
+    <form action="insertVacEntry.php" method="post">
+        Person SIN: <input type="text" name="person_sin"><br>
+        Dose Number: <input type="text" name="dose_number"><br>
+        Vaccine Type: <input type="text" name="vaccine_type"><br>
+        Date: <input type="text" name="date"><br>
+        FID: <input type="text" name="fid"><br>
+        <input type="submit" value="Submit">
+    </form>
     <style>
       h1 {
         background-color: antiquewhite;
@@ -69,13 +69,10 @@
       a, form{
         background-color: #d66459;
       }
-      a:hover, form:hover {
-        background-color: maroon;
-      }
       a,
       a:hover, form, form:hover {
         display:inline-block;
-        width: 10%;
+        width: 30%;
         padding-top: 15px;
         padding-bottom: 15px;
         border-radius: 25px;
