@@ -128,18 +128,18 @@ VALUES
 ('200000000', '100000000', 'roommate'); -- lives with Gabriel D'Alesio
 
 
-INSERT INTO WorksAt (employee_sin, fid, start_date, end_date) 
+INSERT INTO WorksAt (sid, employee_sin, fid, start_date, end_date) 
 VALUES 
-('123123123', 1, '2021-01-01', NULL), -- Alex Kepekci at CLSC
-('111222333', 1, '2021-03-01', NULL), -- SpongeBob SquarePants at CLSC (manager)
-('444555666', 2, '2022-04-05', NULL), -- Patrick Star at General Hospital (manager)
-('777888999', 3, '2023-12-12', NULL), -- Squidward Tentacles at Downtown Clinic (manager)
-('123456789', 4, '2024-01-05', NULL), -- Sandy Cheeks at Main Street Pharmacy (manager)
-('300000000', 4, '2019-05-09', NULL), -- Youssef Yacoub at Main Street Pharmacy
-('234567890', 5, '2021-02-01', NULL), -- Emily Smith at Special Health Center (manager)
-('987654321', 5, '2019-05-21', '2023-08-27'), -- Jane Doe at Special Health Center (not working anymore)
-('100000000', 5, '2021-05-01', NULL), -- Gabriel D'Alesio at Special Health Center
-('200000000', 5, '2022-01-05', NULL); -- Leo Brodeur at Special Health Center
+(1, '123123123', 1, '2021-01-01', NULL), -- Alex Kepekci at CLSC
+(2, '111222333', 1, '2021-03-01', NULL), -- SpongeBob SquarePants at CLSC (manager)
+(3, '444555666', 2, '2022-04-05', NULL), -- Patrick Star at General Hospital (manager)
+(4, '777888999', 3, '2023-12-12', NULL), -- Squidward Tentacles at Downtown Clinic (manager)
+(5, '123456789', 4, '2024-01-05', NULL), -- Sandy Cheeks at Main Street Pharmacy (manager)
+(6, '300000000', 4, '2019-05-09', NULL), -- Youssef Yacoub at Main Street Pharmacy
+(7, '234567890', 5, '2021-02-01', NULL), -- Emily Smith at Special Health Center (manager)
+(8, '987654321', 5, '2019-05-21', '2023-08-27'), -- Jane Doe at Special Health Center (not working anymore)
+(9, '100000000', 5, '2021-05-01', NULL), -- Gabriel D'Alesio at Special Health Center
+(10, '200000000', 5, '2022-01-05', NULL); -- Leo Brodeur at Special Health Center
 
 INSERT INTO Vaccinated (person_sin, dose_number, vaccine_type, date, fid) 
 VALUES 
@@ -188,11 +188,21 @@ WHERE person_sin = '444555666';
 
 SELECT * FROM Infected;
 
-INSERT INTO Schedule (sid, fid, employee_sin, Date, StartTime, EndTime)
-VALUES 
-(1, 1, '123123123', '2023-03-25', '08:00:00', '16:00:00'),
-(2, 1, '123123123', '2023-03-25', '15:00:00', '23:00:00');  -- this is conflicting
--- (2, 1, '123123123', '2023-03-25', '16:00:00', '08:00:00'), -- violates StartTime < EndTime constraint
+INSERT INTO Schedule(sid) 
+VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10);
+
+INSERT INTO Shift (start, end, sid, shift_id) VALUES
+('2024-04-02 09:00:00', '2024-04-02 13:00:00', 1, 1);
 
 DELETE FROM Schedule 
 WHERE sid = 1;

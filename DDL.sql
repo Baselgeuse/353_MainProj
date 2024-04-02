@@ -189,7 +189,7 @@ CREATE TABLE Shift (
 	start DATETIME NOT NULL,
     end DATETIME NOT NULL,
     sid INT NOT NULL,
-    shift_id INT NOT NULL,
+    shift_id INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(shift_id, sid),
     FOREIGN KEY (sid) REFERENCES Schedule(sid)
     ON DELETE CASCADE
