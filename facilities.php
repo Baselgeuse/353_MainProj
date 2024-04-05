@@ -46,6 +46,7 @@
     <div><a href="insertFac.php">Create New Facility</a></div>
     <div><a href="editFac.php">Edit Facility</a></div>
     <div><a href="deleteFac.php">Delete Facility</a></div>
+    <div><a href="recentFacilityWorkers.php">Facility Recent Workers</a></div>
     <style>
       h1 {
         background-color: antiquewhite;

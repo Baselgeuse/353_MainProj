@@ -38,9 +38,9 @@ VALUES
 ('6', 'M3sa55', 'Jack', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
 ('7', 'M55w45', 'Alex', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
 ('8', 'M55225', 'Paul', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
-('9', 'M3525', 'Jack', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
-('10', 'M53545', 'Alex', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
-('11', 'M54525', 'Paul', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105);
+('9', 'M3525', 'John', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
+('10', 'M53545', 'Jill', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
+('11', 'M54525', 'Renaud', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105);
 
 
 INSERT INTO Employee (employee_sin) 
@@ -143,17 +143,23 @@ VALUES
 (21,'11', 6, '2024-01-05', NULL); # Leo Brodeur at Special Health Center
 
 
+
 INSERT INTO Vaccinated (person_sin, dose_number, vaccine_type, date, fid) 
 VALUES 
  ('123123123', 2, 'Moderna', '2024-04-15', 1), # Alex Kepekci
 ('111222333', 3, 'Pfizer', '2024-09-11', 1), # Spongebob Squarepants
 ('444555666', 1, 'Pfizer', '2024-05-20', 2), # Patrick Star
-('777888999', 1, 'AstraZeneca', '2024-06-25', 3), # Squidward Tentacles
+-- ('777888999', 1, 'AstraZeneca', '2024-06-25', 3), # Squidward Tentacles
 ('300000000', 2, 'AstraZeneca', '2024-05-01', 4), # Youssef Yacoub
 ('100000000', 2, 'Moderna', '2024-06-06', 5), # Gabriel D'Alesio
 ('6', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
 ('7', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
+('8', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
+('9', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
+('10', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
+('11', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
 ('000000002', 1, 'Johnson & Johnson', '2023-05-01', 5); # Theo Von
+
 
 INSERT INTO Infected (person_sin, variantType, date) 
 VALUES 
@@ -162,10 +168,10 @@ VALUES
 ('123123123', 'Omicron', '2023-1-06'), # Alex Kepekci
 ('111222333', 'Omicron', '2023-01-01'), # Spongebob Squarepants
 ('444555666', 'COVID-19', '2022-08-15'), # Patrick Star
-('777888999', 'Alpha', '2022-09-30'), # Squidward Tentacles
-('777888999', 'COVID-19', '2022-10-30'), # Squidward Tentacles
-('777888999', 'Omicron', '2024-04-3'), # Squidward Tentacles
-('777888999', 'Omicron', '2023-01-30'), # Squidward Tentacles
+-- ('777888999', 'Alpha', '2022-09-30'), # Squidward Tentacles
+-- ('777888999', 'COVID-19', '2022-10-30'), # Squidward Tentacles
+-- ('777888999', 'Omicron', '2024-04-3'), # Squidward Tentacles
+-- ('777888999', 'Omicron', '2023-01-30'), # Squidward Tentacles
 ('123456789', 'COVID-19', '2023-12-05'), # Sandy Cheeks
 ('000000001', 'Omicron', '2024-04-3'), # Infected Dude
 ('100000000', 'Alpha', '2024-04-3'), # Gabriel D'Alesio
@@ -176,6 +182,8 @@ VALUES
 ('300000000', 'SARS-Cov-2', '2024-03-01'), # Leo Brodeur
 ('987654321', 'Alpha', '2024-03-01'),
 ('987654321', 'COVID-19', '2023-01-23'),
+('111111111', 'COVID-19', '2024-04-3'),
+('222222222', 'COVID-19', '2024-04-3'),
 ('333333333', 'COVID-19', '2024-04-3'),
 ('444444444', 'COVID-19', '2024-04-04'),
 ('555555555', 'Alpha', '2024-04-04'); # Leo Brodeur

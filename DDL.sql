@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS HFESTS;
+CREATE DATABASE IF NOT EXISTS zkc353_4;
 SET foreign_key_checks = 0;
 
 DROP TABLE IF EXISTS Person;
@@ -195,7 +195,8 @@ BEGIN
     SELECT COUNT(*) INTO  vaccinations
 	FROM  Vaccinated
     JOIN Schedule ON Vaccinated.person_sin = Schedule.employee_sin
-	Where DATEDIFF(new.start,Vaccinated.date) <= 180;
+	Where Schedule.sid = New.sid
+    AND DATEDIFF(New.start,Vaccinated.date) <= 180;
 
     IF vaccinations = 0 THEN
         SIGNAL SQLSTATE '45000'
