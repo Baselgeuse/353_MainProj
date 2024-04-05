@@ -10,7 +10,7 @@ $employee_sin = $_POST["employee_sin"];
 $start_date = $_POST["start_date"];
 $end_date = $_POST["end_date"];
 
-$sql = "INSERT INTO Shift(start, end, sid) VALUES ('$start_date', '$end_date', (SELECT sid FROM WorksAt WHERE employee_sin = '$employee_sin'))";
+$sql = "INSERT INTO Shift(start, end, sid) VALUES ('$start_date', '$end_date', (SELECT sid FROM Schedule WHERE employee_sin = '$employee_sin'))";
 
 if ($connection->query($sql) === TRUE) {
   echo "New record created successfully";
