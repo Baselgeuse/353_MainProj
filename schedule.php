@@ -20,7 +20,7 @@
     if($connection->connect_error){ 
       die('Connection Failed ' . $connection->connect_error); 
     } 
-    $sql = "SELECT sid, employee_sin, fid, start_date, end_date FROM WorksAt";
+    $sql = "SELECT sid, employee_sin, fid, start_date, end_date FROM Schedule";
     $result = $connection -> query($sql);
 
     if ($result -> num_rows > 0){
