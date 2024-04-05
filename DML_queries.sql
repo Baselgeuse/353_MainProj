@@ -23,7 +23,7 @@ ORDER BY
 
 -- QUESTION 11
 SELECT 
-    r.address,
+    r.address AS Address,
     r.residence_type AS Residence_Type,
     p.fname AS First_Name,
     p.lname AS Last_Name,
@@ -41,11 +41,15 @@ SELECT
 FROM 
     Person e
 JOIN 
-    LivesWith lw ON e.SIN = lw.employee_sin
+    (SELECT SIN, rid FROM Person
+     UNION
+     SELECT sin, rid FROM Secondary) er ON e.SIN = er.SIN
 JOIN 
-    Person p ON lw.person_sin = p.SIN
-JOIN 
-    Residence r ON p.rid = r.rid
+    Residence r ON er.rid = r.rid
+LEFT JOIN 
+    LivesWith lw ON er.SIN = lw.employee_sin OR er.SIN = lw.person_sin
+LEFT JOIN 
+    Person p ON lw.person_sin = p.SIN OR er.SIN = p.SIN
 LEFT JOIN 
     Pharmacist ph ON p.SIN = ph.pharmacist_sin
 LEFT JOIN 
@@ -61,12 +65,131 @@ LEFT JOIN
 LEFT JOIN 
     Administrative ad ON p.SIN = ad.administrative_sin
 WHERE 
-    e.SIN = '123123123' -- Replace with the SIN of the employee of interest
-    AND p.SIN != '123123123' -- Exclude the employee’s own record
+    e.SIN = '123123123' 
+    AND p.SIN != '123123123' -- exclude employee’s own record
 ORDER BY 
     r.address, p.lname, p.fname;
 
-    
+-- QUESTION 15
+SELECT 
+    p.fname AS First_Name,
+    p.lname AS Last_Name,
+    MIN(wa.start_date) AS First_Day_of_Work,
+    p.DOB AS Date_of_Birth,
+    p.email AS Email_Address,
+    (SELECT COUNT(*) FROM Infected WHERE person_sin = n.nurse_sin) AS Total_Times_Infected,
+    COUNT(DISTINCT vac.dose_number) AS Total_Number_of_Vaccines,
+    SUM(TIMESTAMPDIFF(HOUR, s.start, s.end)) AS Total_Hours_Scheduled,
+    COUNT(DISTINCT sec.rid) AS Total_Secondary_Residences
+FROM 
+    Nurse n
+JOIN 
+    Person p ON n.nurse_sin = p.SIN
+JOIN 
+    WorksAt wa ON n.nurse_sin = wa.employee_sin
+JOIN 
+    Infected inf ON n.nurse_sin = inf.person_sin
+LEFT JOIN 
+    Vaccinated vac ON n.nurse_sin = vac.person_sin
+LEFT JOIN 
+    Shift s ON wa.sid = s.sid
+LEFT JOIN 
+    Secondary sec ON p.SIN = sec.sin
+WHERE 
+    inf.date BETWEEN DATE_SUB(CURDATE(), INTERVAL 14 DAY) AND CURDATE()
+GROUP BY 
+    n.nurse_sin
+HAVING 
+    COUNT(DISTINCT wa.fid) >= 2
+ORDER BY 
+    First_Day_of_Work ASC, 
+    First_Name ASC, 
+    Last_Name ASC;
+
+-- QUESTION 16
+SELECT 
+    roles.EmployeeRole AS Role,
+    COUNT(DISTINCT roles.sin) AS Total_Employees,
+    SUM(
+        CASE 
+            WHEN inf.person_sin IS NOT NULL
+                 AND inf.date BETWEEN DATE_SUB(CURDATE(), INTERVAL 14 DAY) AND CURDATE()
+            THEN 1 
+            ELSE 0 
+        END
+    ) AS Total_Infected_Employees
+FROM (
+    SELECT pharmacist_sin AS sin, 'Pharmacist' AS EmployeeRole FROM Pharmacist WHERE pharmacist_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT nurse_sin, 'Nurse' FROM Nurse WHERE nurse_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT doctor_sin, 'Doctor' FROM Doctor WHERE doctor_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT receptionist_sin, 'Receptionist' FROM Receptionist WHERE receptionist_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT cashier_sin, 'Cashier' FROM Cashier WHERE cashier_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT security_sin, 'Security' FROM Security WHERE security_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT administrative_sin, 'Administrative' FROM Administrative WHERE administrative_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+) AS roles
+LEFT JOIN Infected inf ON roles.sin = inf.person_sin
+GROUP BY roles.EmployeeRole
+ORDER BY roles.EmployeeRole;
+
+-- QUESTION 17
+SELECT 
+    roles.EmployeeRole AS Role,
+    COUNT(DISTINCT roles.sin) AS Total_Employees,
+    SUM(
+        CASE 
+            WHEN inf.person_sin IS NULL
+            THEN 1 
+            ELSE 0 
+        END
+    ) AS Employees_Never_Infected
+FROM (
+    SELECT pharmacist_sin AS sin, 'Pharmacist' AS EmployeeRole FROM Pharmacist WHERE pharmacist_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT nurse_sin, 'Nurse' FROM Nurse WHERE nurse_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT doctor_sin, 'Doctor' FROM Doctor WHERE doctor_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT receptionist_sin, 'Receptionist' FROM Receptionist WHERE receptionist_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT cashier_sin, 'Cashier' FROM Cashier WHERE cashier_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT security_sin, 'Security' FROM Security WHERE security_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+    UNION ALL
+    SELECT administrative_sin, 'Administrative' FROM Administrative WHERE administrative_sin IN (SELECT employee_sin FROM WorksAt WHERE end_date IS NULL)
+) AS roles
+LEFT JOIN Infected inf ON roles.sin = inf.person_sin
+GROUP BY roles.EmployeeRole
+ORDER BY roles.EmployeeRole;
+
+-- QUESTION 18
+SELECT 
+    f.province,
+    COUNT(DISTINCT f.fid) AS Total_Facilities,
+    COUNT(DISTINCT wa.employee_sin) AS Total_Current_Employees,
+    COUNT(DISTINCT CASE 
+		WHEN inf.person_sin IS NOT NULL 
+        THEN wa.employee_sin END) AS Total_Infected_Employees,
+    MAX(f.capacity) AS Maximum_Capacity,
+    SUM(TIMESTAMPDIFF(HOUR, s.start, s.end)) AS Total_Hours_Scheduled
+FROM 
+    Facility f
+LEFT JOIN WorksAt wa ON f.fid = wa.fid AND wa.end_date IS NULL
+LEFT JOIN (
+    SELECT person_sin FROM Infected
+    WHERE date BETWEEN DATE_SUB(CURDATE(), INTERVAL 14 DAY) AND CURDATE()
+) AS inf ON wa.employee_sin = inf.person_sin
+LEFT JOIN Schedule sch ON wa.sid = sch.sid
+LEFT JOIN Shift s ON sch.sid = s.sid AND s.start BETWEEN '2024-04-01' AND '2024-12-31'
+GROUP BY f.province
+ORDER BY f.province;
+
+
 
 SELECT 'Residence' AS TableName, COUNT(*) AS "Count(*)" FROM Residence
 UNION ALL

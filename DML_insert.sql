@@ -6,7 +6,12 @@ VALUES
 (4, '400 Oak Street', 'Calgary', 'Alberta', 'T2P5H5', '444-444-4444', 5, 'demidetached'), -- Sandy Cheeks, Theo Von
 (5, '500 Birch Lane', 'Halifax', 'Nova Scotia', 'B3H4R2', '555-555-5555', 3, 'house'), -- Emily Smith
 (6, '600 Street Avenue', 'Winnipeg', 'Manitoba', 'J0H5Z9', '666-666-666', 7, 'apartment'), -- Gabriel D'Alesio, Leo Brodeur
-(7, '700 King Crescent', 'Iqaluit', 'Nunavut', 'Z9Z5X5', '777-777-777', 2, 'condominium'); -- Youssef Yacoub
+(7, '700 King Crescent', 'Iqaluit', 'Nunavut', 'Z9Z5X5', '777-777-777', 2, 'condominium'), -- Youssef Yacoub
+(101, '123 Elm St', 'Anytown', 'Anystate', '12345', '1112223333', 10, 'apartment'),
+(102, '456 Oak St', 'Othertown', 'Otherstate', '67890', '4445556666', 8, 'condominium'),
+(103, '789 Maple St', 'Sometown', 'Somestate', '13579', '7778889999', 15, 'demidetached'),
+(104, '101 Pine St', 'Anytown', 'Anystate', '24680', '0001112222', 12, 'house'),
+(105, '202 Cedar St', 'Othertown', 'Otherstate', '36912', '3334445555', 6, 'apartment'); # Youssef Yacoub
 
 INSERT INTO Person (SIN, MID, fname, lname, email, DOB, phone_number, citizenship, rid) 
 VALUES
@@ -21,6 +26,17 @@ VALUES
 ('100000000', 'DALG11111111', 'Gabriel', 'D''Alesio', 'galesi@encs.concordia.ca', '1996-08-12', '514-923-2932', 'Canadian', 6), -- lives with Leo Brodeur
 ('200000000', 'BROL11111111', 'Leo', 'Brodeur', 'le_brode@live.concordia.ca', '1999-12-09', '514-223-2321', 'Canadian', 6), -- lives with Gabriel D'Alesio
 ('300000000', 'YACY11111111', 'Youssef', 'Yacoub', 'y_yacoub@live.concordia.ca', '1995-04-24', '514-999-1234', 'Canadian', 7), -- lives solo
+('111111111', 'M111', 'John', 'Doe', 'john.doe@example.com', '1980-05-15', '1234567890', 'Canadian', 101),
+('222222222', 'M222', 'Jane', 'Smith', 'jane.smith@example.com', '1975-10-20', '9876543210', 'Canadian', 102),
+('333333333', 'M333', 'Alice', 'Johnson', 'alice.johnson@example.com', '1990-03-25', '5555555555', 'American', 103),
+('444444444', 'M444', 'Bob', 'Brown', 'bob.brown@example.com', '1988-12-10', '7777777777', 'British', 104),
+('555555555', 'M555', 'Emily', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
+('6', 'M3sa55', 'Jack', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
+('7', 'M55w45', 'Alex', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
+('8', 'M55225', 'Paul', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
+('9', 'M3525', 'John', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
+('10', 'M53545', 'Jill', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
+('11', 'M54525', 'Renaud', 'Davis', 'emily.davis@example.com', '1985-07-08', '9999999999', 'Australian', 105),
 -- people who live with these employees
 ('000000000', 'SMIJ00000000', 'John', 'Smith', 'johnsmith@gmail.com', '1960-04-23', '514-000-0000', 'Canadian', 2),
 ('000000001', 'DUDR00000000', 'Infected', 'Dude', 'infecteddude@gmail.com', '1998-02-20', '514-111-1111', 'Canadian', 3),
@@ -28,19 +44,19 @@ VALUES
 ('000000003', 'NELW00000000', 'William', 'Nelson', 'willnelson@gmail.com', '1980-05-24', '950-402-4921', 'British', 5);
 
 INSERT INTO Employee (employee_sin) 
-VALUES ('123123123'), ('111222333'),('444555666'),('777888999'),('123456789'),('987654321'),('234567890'),('100000000'),('200000000'),('300000000');
+VALUES ('123123123'), ('111222333'),('444555666'),('777888999'),('123456789'),('987654321'),('234567890'),('100000000'),('200000000'),('300000000'), ('111111111'), ('222222222'),('333333333'),('444444444'),('555555555'),('6'),('7'),('8'),('9'),('10'),('11');
 
 INSERT INTO Pharmacist (pharmacist_sin)
-VALUES ('123123123'), ('100000000'); -- Alex Kepekci, Gabriel D'Alesio
+VALUES ('123123123'), ('100000000'), ('10'); -- Alex Kepekci, Gabriel D'Alesio, Jill Davis
 
 INSERT INTO Nurse (nurse_sin) 
-VALUES ('123456789'); -- Sandy Cheeks
+VALUES ('123456789'), ('6'), ('9'); -- Sandy Cheeks, Jack Davis, John Davis
 
 INSERT INTO Doctor (doctor_sin)
-VALUES ('987654321'), ('300000000'); -- Jane Doe, Youssef Yacoub
+VALUES ('987654321'), ('300000000'), ('111111111'), ('222222222'),('333333333'),('444444444'),('555555555'),('11'); -- Jane Doe, Youssef Yacoub, John Doe, Jane Smith, Alice Johnson, Bob Brown, Emily Davis, Renaud Davis
 
 INSERT INTO Receptionist (receptionist_sin)
-VALUES ('111222333'); -- Spongebob Squarepants
+VALUES ('111222333'), ('7'), ('8'); -- Spongebob Squarepants, Alex Davis, Paul Davis
 
 INSERT INTO Cashier (cashier_sin)
 VALUES ('777888999'); -- Squidward Tentacles
@@ -62,7 +78,13 @@ VALUES
 (2, 'General Hospital', '202  Notre-Dame St', 'Montreal', 'Quebec', 'H3Z2Y7', '222-212-1212', 'www.generalhospital.com', 'hospital', '444555666', 1000), -- Managed by Patrick Star
 (3, 'Downtown Clinic', '303 Crescent St', 'Montreal', 'Quebec', 'H3C5L9', '323-212-1212', 'www.downtownclinic.com', 'clinic', '777888999', 300), -- Managed by Squidward Tentacles
 (4, 'Main Street Pharmacy', '404 Sherbrooke Ave', 'Montreal', 'Quebec', 'H4N5L8', '424-212-1212', 'www.mainstreetpharmacy.com', 'pharmacy', '123456789', 50), -- Managed by Sandy Cheeks
-(5, 'Special Health Center', '505 Union Ave', 'Montreal', 'Quebec', 'H5S6D9', '525-212-1212', 'www.specialhealthcenter.com', 'special', '234567890', 200); -- Managed by Emily Smith
+(5, 'Special Health Center', '505 Union Ave', 'Montreal', 'Quebec', 'H5S6D9', '525-212-1212', 'www.specialhealthcenter.com', 'special', '234567890', 200), -- Managed by Emily Smith
+(6, 'Pharmacy F', '101 Pine St', 'Anytown', 'Anystate', '24680', '0001112222', 'www.pharmacyD.com', 'pharmacy', '234567890', 50),
+(101, 'Hospital A', '123 Main St', 'Anytown', 'Anystate', '12345', '1112223333', 'www.hospitalA.com', 'hospital', '234567890', 200),
+(102, 'Hospital B', '456 Oak St', 'Othertown', 'Otherstate', '67890', '4445556666', 'www.hospitalB.com', 'hospital', '234567890', 150),
+(103, 'Clinic C', '789 Elm St', 'Sometown', 'Somestate', '13579', '7778889999', 'www.clinicC.com', 'clinic', '234567890', 100),
+(104, 'Pharmacy D', '101 Pine St', 'Anytown', 'Anystate', '24680', '0001112222', 'www.pharmacyD.com', 'pharmacy', '234567890', 50),
+(105, 'Clinic E', '202 Maple St', 'Othertown', 'Otherstate', '36912', '3334445555', 'www.clinicE.com', 'clinic', '234567890', 80); # Managed by Emily Smith
 
 INSERT INTO Variant (variantType) 
 VALUES 
@@ -105,7 +127,19 @@ VALUES
 (8, '234567890', 5, '2021-02-01', NULL), -- Emily Smith at Special Health Center (manager)
 (9, '987654321', 5, '2019-05-21', '2023-08-27'), -- Jane Doe at Special Health Center (not working anymore)
 (10, '100000000', 5, '2021-05-01', NULL), -- Gabriel D'Alesio at Special Health Center
-(11, '200000000', 5, '2022-01-05', NULL); -- Leo Brodeur at Special Health Center
+(11, '200000000', 5, '2022-01-05', NULL), -- Leo Brodeur at Special Health Center
+(12, '123456789', 3, '2023-02-05', NULL), -- Sandy Cheeks at Downtown Clinic
+(15,'111111111', 5, '2022-01-05', NULL), # John Doe at Special Health Center
+(13,'444444444', 5, '2022-01-05', NULL), # Bob Brown at Special Health Center
+(14,'555555555', 5, '2024-01-05', NULL), # Emily Davis at Special Health Center
+(16,'6', 6, '2024-01-05', NULL), # Jack Davis at Pharmacy F
+(17,'7', 6, '2024-01-05', NULL), # Alex Davis at Pharmacy F
+(18,'8', 6, '2024-01-05', NULL), # Paul Davis at Pharmacy F
+(19,'9', 6, '2024-01-05', NULL), # John Davis at Pharmacy F
+(20,'10', 6, '2024-01-05', NULL), # Jill Davis at Pharmacy F
+(21,'11', 6, '2024-01-05', NULL), # Renaud Davis at Pharmacy F
+(22,'6', 1, '2024-01-05', NULL), # Jack Davis at CLSC
+(23,'9', 1, '2024-01-05', NULL); # John Davis at CLSC
 
 INSERT INTO Vaccinated (person_sin, dose_number, vaccine_type, date, fid) 
 VALUES 
@@ -115,7 +149,14 @@ VALUES
 ('777888999', 1, 'AstraZeneca', '2022-06-25', 3), -- Squidward Tentacles
 ('300000000', 2, 'AstraZeneca', '2023-01-01', 4), -- Youssef Yacoub
 ('100000000', 2, 'Moderna', '2022-06-06', 5), -- Gabriel D'Alesio
-('000000002', 1, 'Johnson & Johnson', '2023-01-01', 5); -- Theo Von
+('000000002', 1, 'Johnson & Johnson', '2023-01-01', 5), -- Theo Von
+('6', 2, 'Moderna', '2024-01-06', 6), -- Jack Davis
+('7', 2, 'Moderna', '2024-01-06', 6), -- Alex Davis
+('8', 2, 'Moderna', '2024-01-06', 6), -- Paul Davis
+('9', 2, 'Moderna', '2024-01-06', 6), -- John Davis
+('10', 2, 'Moderna', '2024-01-06', 6), -- Jill Davis
+('11', 2, 'Moderna', '2024-01-06', 6), -- Renaud Davis 
+('555555555', 1, 'Johnson & Johnson', '2024-01-01', 5); -- Emily Davis
 
 INSERT INTO Infected (person_sin, variantType, date) 
 VALUES 
@@ -129,12 +170,22 @@ VALUES
 ('777888999', 'Omicron', '2022-11-30'), -- Squidward Tentacles
 ('777888999', 'Omicron', '2023-01-30'), -- Squidward Tentacles
 ('123456789', 'COVID-19', '2023-12-05'), -- Sandy Cheeks
+('123456789', 'Alpha', '2024-04-04'), -- Sandy Cheeks
 ('000000001', 'Omicron', '2023-06-24'), -- Infected Dude
 ('100000000', 'Alpha', '2023-01-20'), -- Gabriel D'Alesio
 ('200000000', 'COVID-19', '2022-05-01'), -- Leo Brodeur
 ('200000000', 'COVID-19', '2023-01-01'), -- Leo Brodeur
 ('200000000', 'SARS-Cov-2', '2023-03-01'), -- Leo Brodeur
-('200000000', 'Alpha', '2023-05-01'); -- Leo Brodeur
+('200000000', 'Alpha', '2023-05-01'), -- Leo Brodeur
+('6', 'Omicron', '2024-04-04'), -- Jack Davis
+('9', 'Omicron', '2024-04-04'); -- John Davis
+
+
+INSERT INTO Secondary (rid, sin)
+VALUES
+(1, '123123123'),
+(3, '123123123'),
+(2, '200000000');
 
 INSERT INTO Schedule(sid) 
 VALUES
@@ -148,15 +199,32 @@ VALUES
 (8),
 (9),
 (10),
-(11);
+(11),
+(12), 
+(13),
+(14),
+(15),
+(16),
+(17),
+(18), 
+(19),
+(21),
+(22),
+(23);
 
 INSERT INTO Shift (start, end, sid, shift_id) 
 VALUES
-('2024-04-02 09:00:00', '2024-04-02 13:00:00', 1, 1),
+('2024-04-02 09:00:00', '2024-04-02 13:00:00', 1, 1), -- alex kepekci
 ('2024-04-03 09:00:00', '2024-04-03 16:00:00', 1, 2),
 ('2024-04-04 06:00:00', '2024-04-04 15:00:00', 1, 3),
 ('2024-04-05 03:00:00', '2024-04-05 9:00:00', 1, 4),
-('2024-04-05 15:00:00', '2024-04-05 19:00:00', 1, 5);
+('2024-04-05 15:00:00', '2024-04-05 19:00:00', 1, 5),
+('2024-04-02 09:00:00', '2024-04-02 13:00:00', 6, 6), -- sandy cheeks
+('2024-04-03 09:00:00', '2024-04-03 16:00:00', 6, 7),
+('2024-04-04 06:00:00', '2024-04-04 15:00:00', 6, 8),
+('2024-04-05 03:00:00', '2024-04-05 9:00:00', 6, 9),
+('2024-04-05 15:00:00', '2024-04-05 19:00:00', 6, 10);
+
 
 '
 INSERT INTO Schedule (sid, fid, employee_sin, Date, StartTime, EndTime)
