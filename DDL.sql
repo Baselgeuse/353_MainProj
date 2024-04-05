@@ -211,14 +211,21 @@ FOR EACH ROW
 BEGIN
     DECLARE violations INT;
     SELECT COUNT(*) INTO violations
-    FROM Schedule s1
-    JOIN Shift ON s1.sid = Shift.sid
-    WHERE DATE(Shift.end) = DATE(NEW.start)
+    FROM Employee
+    JOIN Schedule on Schedule.employee_sin = Employee.employee_sin
+    JOIN Shift ON Schedule.sid = Shift.sid
+    WHERE Employee.employee_sin = 
+		(Select e.employee_sin 
+        FROM Employee e
+        JOIN Schedule on Schedule.employee_sin = e.employee_sin
+        Where New.sid = Schedule.sid
+        )
+    AND DATE(Shift.end) = DATE(NEW.start)
     AND TIMESTAMPDIFF(hour, new.start,Shift.end) <= 2;
 
     IF violations > 0 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Employee hasn''t had his 2 hour break';
+        SET MESSAGE_TEXT = 'Employee needs at least a 2 hour break after previous shift';
     END IF;
 END//
 
@@ -244,24 +251,6 @@ BEGIN
     END IF;
 END//
 
-DELIMITER //
-CREATE TRIGGER ScheduleConflict
-BEFORE INSERT ON Shift
-FOR EACH ROW
-BEGIN
-
-	DECLARE conflict_count INT;
-    SELECT COUNT(*) INTO conflict_count
-    FROM Schedule s1
-    JOIN Shift ON s1.sid = Shift.sid
-    WHERE DATE(Shift.end) > DATE(NEW.start)
-    AND new.sid = s1.sid;
-
-    IF conflict_count > 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Employee has a shift conflict';
-    END IF;
-END //
 
 
 SET foreign_key_checks = 1;

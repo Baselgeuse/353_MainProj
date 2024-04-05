@@ -140,7 +140,8 @@ VALUES
 (18,'8', 6, '2024-01-05', NULL), # Leo Brodeur at Special Health Center
 (19,'9', 6, '2024-01-05', NULL), # Leo Brodeur at Special Health Center
 (20,'10', 6, '2024-01-05', NULL), # Leo Brodeur at Special Health Center
-(21,'11', 6, '2024-01-05', NULL); # Leo Brodeur at Special Health Center
+(21,'11', 6, '2024-01-05', NULL), # Leo Brodeur at Special Health Center
+(22,'6', 6, '2024-01-05', NULL); # Leo Brodeur at Special Health Center(
 
 
 
@@ -152,14 +153,14 @@ VALUES
 -- ('777888999', 1, 'AstraZeneca', '2024-06-25', 3), # Squidward Tentacles
 ('300000000', 2, 'AstraZeneca', '2024-05-01', 4), # Youssef Yacoub
 ('100000000', 2, 'Moderna', '2024-06-06', 5), # Gabriel D'Alesio
-('6', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
-('7', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
-('8', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
-('9', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
-('10', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
-('11', 2, 'Moderna', '2024-06-06', 6), # Gabriel D'Alesio
-('000000002', 1, 'Johnson & Johnson', '2023-05-01', 5); # Theo Von
-
+('6', 2, 'Moderna', '2024-01-06', 6), # Gabriel D'Alesio
+('7', 2, 'Moderna', '2024-01-06', 6), # Gabriel D'Alesio
+('8', 2, 'Moderna', '2024-01-06', 6), # Gabriel D'Alesio
+('9', 2, 'Moderna', '2024-01-06', 6), # Gabriel D'Alesio
+('10', 2, 'Moderna', '2024-01-06', 6), # Gabriel D'Alesio
+('11', 2, 'Moderna', '2024-01-06', 6), # Gabriel D'Alesio
+('000000002', 1, 'Johnson & Johnson', '2023-05-01', 5), # Theo Von
+('555555555', 1, 'Johnson & Johnson', '2024-01-01', 5); # Theo Von
 
 INSERT INTO Infected (person_sin, variantType, date) 
 VALUES 
@@ -197,6 +198,7 @@ VALUES
 ('2024-04-02 08:00:00', '2024-04-02 16:00:00', 19), -- Shift 2
  ('2024-04-04 08:00:00', '2024-04-04 16:00:00', 20), -- Shift 4
  ('2024-04-05 08:00:00', '2024-04-05 16:00:00', 21); -- Shift 5
+ 
 
 
 
