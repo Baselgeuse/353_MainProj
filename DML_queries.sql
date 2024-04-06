@@ -189,6 +189,57 @@ LEFT JOIN Shift s ON sch.sid = s.sid AND s.start BETWEEN '2024-04-01' AND '2024-
 GROUP BY f.province
 ORDER BY f.province;
 
+-- Generate emails for every employee, indicating their schedule for the upcoming week
+SELECT
+    f.name AS Facility_Name,
+    f.address AS Facility_Address,
+    CONCAT(p.fname, ' ', p.lname) AS Employee_Name,
+    p.email AS Employee_Email,
+    GROUP_CONCAT(DISTINCT r.Role ORDER BY r.Role) AS Employee_Roles,
+    CASE
+        WHEN DAYOFWEEK(s.start) = 2 THEN 'Monday'
+        WHEN DAYOFWEEK(s.start) = 3 THEN 'Tuesday'
+        WHEN DAYOFWEEK(s.start) = 4 THEN 'Wednesday'
+        WHEN DAYOFWEEK(s.start) = 5 THEN 'Thursday'
+        WHEN DAYOFWEEK(s.start) = 6 THEN 'Friday'
+        WHEN DAYOFWEEK(s.start) = 7 THEN 'Saturday'
+        WHEN DAYOFWEEK(s.start) = 1 THEN 'Sunday'
+    END AS Schedule_Day,
+    MIN(s.start) AS Schedule_Start,
+    MAX(s.end) AS Schedule_End
+FROM
+    Person p
+JOIN
+    WorksAt wa ON p.SIN = wa.employee_sin
+JOIN
+    Facility f ON wa.fid = f.fid
+JOIN
+    Shift s ON wa.sid = s.sid
+JOIN
+    (SELECT pharmacist_sin AS sin, 'Pharmacist' AS Role FROM Pharmacist
+     UNION ALL
+     SELECT nurse_sin, 'Nurse' FROM Nurse
+     UNION ALL
+     SELECT doctor_sin, 'Doctor' FROM Doctor
+     UNION ALL
+     SELECT receptionist_sin, 'Receptionist' FROM Receptionist
+     UNION ALL
+     SELECT cashier_sin, 'Cashier' FROM Cashier
+     UNION ALL
+     SELECT security_sin, 'Security' FROM Security
+     UNION ALL
+     SELECT administrative_sin, 'Administrative' FROM Administrative
+    ) r ON p.SIN = r.sin
+WHERE
+    s.start BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL 7 DAY
+GROUP BY
+    Facility_Name, Facility_Address, Employee_Name, Employee_Email, Schedule_Day
+ORDER BY
+    MIN(s.start);
+
+
+
+
 
 
 SELECT 'Residence' AS TableName, COUNT(*) AS "Count(*)" FROM Residence
