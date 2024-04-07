@@ -7,12 +7,12 @@ if($connection->connect_error){
 }
 
 $sql = "SELECT Facility.name, Facility.address, Facility.city, Facility.province, Facility.postal_code, Facility.phone_number, Facility.web_address, Facility.facility_type, 
-               Facility.capacity, Person.fname AS manager_name, COUNT(WorksAt.employee_sin) AS num_employees, COUNT(Doctor.doctor_sin) AS num_doctors, COUNT(Nurse.nurse_sin) AS num_nurses 
+               Facility.capacity, Person.fname AS manager_name, COUNT(Schedule.employee_sin) AS num_employees, COUNT(Doctor.doctor_sin) AS num_doctors, COUNT(Nurse.nurse_sin) AS num_nurses 
         FROM Facility
         Left JOIN Person ON Facility.manager_sin = Person.SIN
-        LEFT JOIN WorksAt ON Facility.fid = WorksAt.fid 
-        LEFT JOIN Doctor ON WorksAt.employee_sin = Doctor.doctor_sin
-        LEFT JOIN Nurse ON WorksAt.employee_sin = Nurse.nurse_sin
+        LEFT JOIN Schedule ON Facility.fid = Schedule.fid 
+        LEFT JOIN Doctor ON Schedule.employee_sin = Doctor.doctor_sin
+        LEFT JOIN Nurse ON Schedule.employee_sin = Nurse.nurse_sin
         GROUP BY Facility.fid
         ORDER BY Facility.province ASC, Facility.city ASC, Facility.facility_type ASC, COUNT(Doctor.doctor_sin) ASC";
 

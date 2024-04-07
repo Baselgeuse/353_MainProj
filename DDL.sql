@@ -162,6 +162,16 @@ CREATE TABLE Shift (
     CONSTRAINT ends_before_start CHECK (start < end)
 );
 
+CREATE TABLE EmailLog(
+    log_id INT AUTO_INCREMENT,
+    log_date DATETIME NOT NULL,
+    sender_fac VARCHAR(255) NOT NULL,
+    receiver_email VARCHAR(255) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    body VARCHAR(100) NOT NULL,
+    PRIMARY KEY(log_id)
+);
+
 DELIMITER //
 
 CREATE TRIGGER CheckOverlapTime

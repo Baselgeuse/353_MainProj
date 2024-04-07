@@ -8,16 +8,16 @@ if($connection->connect_error){
 
 $facility_id = $_POST['facility_id'];
 
-$sql = "SELECT Person.fname, Person.lname, WorksAt.start_date, Person.DOB, Person.SIN, Person.phone_number, Residence.address, Residence.city, Residence.province, Residence.postal_code, Person.citizenship, Person.email, COUNT(Secondary.rid) AS num_secondary_residences
-        FROM WorksAt
-        INNER JOIN Person ON WorksAt.employee_sin = Person.SIN
-        INNER JOIN Facility ON WorksAt.fid = Facility.fid
+$sql = "SELECT Person.fname, Person.lname, Schedule.start_date, Person.DOB, Person.SIN, Person.phone_number, Residence.address, Residence.city, Residence.province, Residence.postal_code, Person.citizenship, Person.email, COUNT(Secondary.rid) AS num_secondary_residences
+        FROM Schedule
+        INNER JOIN Person ON Schedule.employee_sin = Person.SIN
+        INNER JOIN Facility ON Schedule.fid = Facility.fid
         INNER JOIN Residence ON Person.rid = Residence.rid
         LEFT JOIN Secondary ON Person.SIN = Secondary.sin
         WHERE Facility.name = $facility_id
         GROUP BY Person.SIN
         HAVING num_secondary_residences >= 1
-        ORDER BY WorksAt.start_date DESC, Person.fname, Person.lname";
+        ORDER BY Schedule.start_date DESC, Person.fname, Person.lname";
 
 $result = $connection->query($sql);
 
