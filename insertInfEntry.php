@@ -52,7 +52,29 @@ mysqli_free_result($result);
 $sql2 = "INSERT INTO EmailLog(log_date, sender_fac, receiver_email, subject, body) VALUES ('$date', '$senderName', '$receiverEmails', 'Warning', 'One of your colleagues with whom you worked in the past two weeks has been infected with COVID-19');";
 
 if ($connection->query($sql2) === TRUE) {
-    echo "New record created successfully";
+    echo "";
+} else {
+    echo "Error: " . $sql2 . "<br>" . $connection->error;
+}
+
+$sql3 = "SELECT Person.email AS receiver_email FROM Person WHERE Person.SIN = '$person_sin'";
+
+$result = mysqli_query($connection, $sql3);
+
+if ($result){
+    while($row = mysqli_fetch_assoc($result)){
+        $receiverEmail = $row['receiver_email'];
+    }
+} else {
+    echo "Error executing query: " . mysqli_error($connection);
+}
+
+mysqli_free_result($result); 
+
+$sql4 = "INSERT INTO EmailLog(log_date, sender_fac, receiver_email, subject, body) VALUES ('$date', '$senderName', '$receiverEmail', 'Cancellation', 'All of your shifts for the next 2 weeks have been cancelled due to your infection.');";
+
+if ($connection->query($sql4) === TRUE) {
+    echo "New log record created successfully";
 } else {
     echo "Error: " . $sql2 . "<br>" . $connection->error;
 }
