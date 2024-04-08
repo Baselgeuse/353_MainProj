@@ -23,7 +23,7 @@ $sql = "SELECT f.name AS Facility_Name, DAYOFYEAR(s.start) AS Day_of_Year, s.sta
 $result = $connection->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "<table>";
+    echo "<table border='1'>";
     echo "<tr><th>Facility Name</th><th>Day of Year</th><th>Schecule Start</th><th>Schedule End</th></tr>";
     // output data of each row
     while($row = $result->fetch_assoc()) {
